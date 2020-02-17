@@ -9,7 +9,7 @@ namespace ShortUrl.Models
     /// Class give capability to make short unique url
     /// and use it from db
     /// </summary>
-    public static class UrlCutter
+    public static class UrlShorter
     {
         static ProjectContext db = new ProjectContext();
 

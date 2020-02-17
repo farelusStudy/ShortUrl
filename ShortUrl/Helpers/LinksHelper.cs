@@ -15,6 +15,10 @@ namespace ShortUrl.Helpers
         /// </summary>
         public static MvcHtmlString CreateLinkTable(this HtmlHelper html, IEnumerable<Link> links)
         {
+            if (links == null)
+            {
+                return MvcHtmlString.Create("");
+            }
             TagBuilder table = new TagBuilder("table");
             table.MergeAttribute("class", "table");
             foreach (var link in links)
@@ -24,10 +28,10 @@ namespace ShortUrl.Helpers
                 TagBuilder shortUrlCol = new TagBuilder("td");
                 TagBuilder btnCopyCol = new TagBuilder("td");
 
-                fullUrlCol.SetInnerText(link.MakeFullShorter(50));//todo: fix hard code
+                fullUrlCol.SetInnerText(link.FullUrl);//todo: fix hard code
 
                 TagBuilder shortUrlLink = new TagBuilder("a");
-                string fullShort = UrlCutter.MainUrl + link.ShortUrl;
+                string fullShort = UrlShorter.MainUrl + link.ShortUrl;
                 shortUrlLink.MergeAttribute("href", fullShort);
                 shortUrlLink.MergeAttribute("id", $"shortLink{link.Id}");
                 shortUrlLink.SetInnerText(fullShort);

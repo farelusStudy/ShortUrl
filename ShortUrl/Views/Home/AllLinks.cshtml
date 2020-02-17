@@ -2,36 +2,29 @@
 @using ShortUrl.Helpers
 
 @{
-    Layout = null;
     var url = ViewBag.CurrentUrl;
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AllLinks</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table table-bordered">
-        <tr class="table row">
-            <th scope="col">
+<h1>Строка для гита</h1>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
                 @Html.DisplayNameFor(model => model.ShortUrl)
             </th>
-            <th scope="col">
+            <th>
                 @Html.DisplayNameFor(model => model.FullUrl)
             </th>
         </tr>
-
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
-            <tr class="table row">
+            <tr>
                 <td>
-                    <a href="@item.FullUrl">@item.MakeFullShorter(50)</a>
+                    <a href="@item.FullUrl">@item.FullUrl</a>
                 </td>
                 <td>
                     <a id="shortUrl @item.Id" href="@url@item.ShortUrl">@url@item.ShortUrl</a>
@@ -41,10 +34,27 @@
                 </td>
             </tr>
         }
-    </table>
+    </tbody>
+</table>
+<br />
 
-    <br />
-    @Html.CreateLinkTable(Model)
-    <script src="~/Scripts/Main.js"></script>
-</body>
-</html>
+<div class="container-fluid" style="background-color: blueviolet">
+    @foreach (var item in Model)
+    {
+        <div class="row link">
+            <div class="col-md-6 long-link lr-pad">
+                @item.FullUrl
+            </div>
+            <div class="col-md-4 short-link lr-pad">
+                <a href="@url@item.ShortUrl" id="shortUrl @item.Id">@url@item.ShortUrl</a>
+            </div>
+            <div class="col-md-2 copy lr-pad">
+                <button class="btn copy-btn" onclick="copyById('shortUrl @item.Id')">Скопировать</button>
+            </div>
+        </div>
+    }
+</div>
+
+<br />
+@Html.CreateLinkTable(Model)
+<script src="~/Scripts/Main.js"></script>

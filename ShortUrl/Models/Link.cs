@@ -11,11 +11,5 @@ namespace ShortUrl.Models
         public int Id { get; set; }
         public string ShortUrl { get; set; }
         public string FullUrl { get; set; }
-
-        public string MakeFullShorter(int length)
-        {
-            if (FullUrl.Length <= length) return FullUrl;
-            return FullUrl.Substring(0, length) + "...";
-        }
     }
 }
