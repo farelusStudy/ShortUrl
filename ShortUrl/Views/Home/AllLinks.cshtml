@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ShortUrl.Models.Link>
+@using ShortUrl.Helpers
+
+@{
+    Layout = null;
+    var url = ViewBag.CurrentUrl;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllLinks</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-bordered">
+        <tr class="table row">
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.ShortUrl)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.FullUrl)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="table row">
+                <td>
+                    <a href="@item.FullUrl">@item.MakeFullShorter(50)</a>
+                </td>
+                <td>
+                    <a id="shortUrl @item.Id" href="@url@item.ShortUrl">@url@item.ShortUrl</a>
+                </td>
+                <td>
+                    <button onclick="copyById('shortUrl @item.Id')">Скопировать ссылку</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br />
+    @Html.CreateLinkTable(Model)
+    <script src="~/Scripts/Main.js"></script>
+</body>
+</html>

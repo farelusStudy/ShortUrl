@@ -1,0 +1,38 @@
+﻿@model ShortUrl.Models.Link
+@{
+    ViewBag.Title = "Home Page";
+    var shortUrl = (Model.ShortUrl != null) ? ShortUrl.Models.UrlCutter.MainUrl + Model.ShortUrl : "";
+}
+<h1 class="text-center">Short Url</h1>
+<section id="urlBox">
+    @using (Html.BeginForm("GetShortUrl", "Home", FormMethod.Post, new { @class = "text-center" }))
+    {
+        @Html.Label("Введите ссылку для сокращения: ", new { @class = "text-center h2" })
+        <br />
+        <div id="form-container">
+            @Html.EditorFor(m => m.FullUrl)
+            <input type="submit" class="btn btn-danger" value="Сократить" style="height: 100%;" />
+            <br />
+        </div>
+        <a class="center-block text-center" href="@shortUrl">@shortUrl</a>
+    }
+</section>
+
+<style>
+    #FullUrl {
+        width: 100%;
+        height: 100%;
+        max-width: 500px;
+    }
+
+    #form-container {
+        height: 30px;
+        margin: 10px;
+    }
+
+    #urlBox {
+        box-shadow: 0px 1px 4px #ccc;
+        padding: 10px 10px 30px 10px;
+        margin: 40px auto 40px auto;
+    }
+</style>
