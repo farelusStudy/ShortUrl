@@ -16,7 +16,7 @@ namespace ShortUrl.Models
         /// <summary>
         /// Service current url before short code
         /// </summary>
-        public static string MainUrl { get; set; } = @"https://localhost:44397/KEK";
+        public static string MainUrl { get; set; } = @"https://localhost:44397/S";
 
         /// <summary>
         /// Find unic short code of full url from db
@@ -24,27 +24,15 @@ namespace ShortUrl.Models
         /// </summary>
         public static Link GetShortedLink(string fullUrl)
         {
-            var link = db.Links.Where(l => l.FullUrl == fullUrl).ToList().FirstOrDefault();
-            if (link == null) link = MakeAndAddShort(fullUrl);
-            return link;
-        }
+            var code = UniqueCode(fullUrl.Length);
 
-        /// <summary>
-        /// Make new short code for new full url and 
-        /// add it in db
-        /// </summary>
-        private static Link MakeAndAddShort(string fullUrl)
-        {
-            var count = db.Links.ToList().Count;
-            count++;
-            var shortCode = Base36Extensions.ToBase36(count);
-            var link = db.Links.Where(l => l.ShortUrl == shortCode).ToList().FirstOrDefault();
-            if (link == null)
-            {
-                link = new Link() { FullUrl = fullUrl, ShortUrl = shortCode };
-                db.Links.Add(link);
-                db.SaveChangesAsync();
-            }
+            while (IsExists(code)) code = UniqueCode(fullUrl.Length);
+
+            var link = new Link() { FullUrl = fullUrl, ShortUrl = code };
+
+            db.Links.Add(link);
+            db.SaveChangesAsync();
+
             return link;
         }
 
@@ -60,13 +48,15 @@ namespace ShortUrl.Models
             return link.FullUrl;
         }
 
+        private static bool IsExists(string code) => db.Links.Where(l => l.ShortUrl == code).FirstOrDefault() != null;
+
         private static string UniqueCode(int value)
         {
             value = Math.Sign(value) * value;
             Random random = new Random();
             value = (value == 0) ? random.Next(1, 100) : value;
-            string code1 = Base36Extensions.ToBase36(random.Next(100, 10000)*value);
-            string code2 = Base36Extensions.ToBase36(random.Next(101, 1000)*value);
+            string code1 = Base36Extensions.ToBase36((long)Math.Round(value / random.NextDouble()));
+            string code2 = Base36Extensions.ToBase36((long)Math.Round(2 * value / random.NextDouble()));
             return code1 + code2;
         }
     }

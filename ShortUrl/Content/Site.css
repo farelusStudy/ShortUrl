@@ -27,6 +27,7 @@ textarea {
     /*text-align: right;*/
     padding-right: 10px;
 }
+
 .long-link, .short-link {
     white-space: nowrap;
     overflow: hidden;
@@ -54,4 +55,33 @@ textarea {
 .copy-btn {
     width: 100%;
     font-size: 16px;
+}
+
+.btn-shorten {
+    color: white;
+    background-color: blue;
+    width: 25%;
+    height: 100%;
+    margin: 0px;
+    font-size: 18px;
+    min-width: 120px;
+    padding: 10px 16px;
+}
+
+    .btn-shorten:hover {
+        color: white;
+        background-color: rgba(0, 38, 255, 1);
+    }
+
+#form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fullUrl-input {
+    width: 70%;
+    max-width: 1000px;
+    border: 0px solid;
+    border-color: blueviolet;
 }

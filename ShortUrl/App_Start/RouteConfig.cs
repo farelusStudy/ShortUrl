@@ -15,7 +15,7 @@ namespace ShortUrl
 
             routes.MapRoute(
                 name: "Default2",
-                url: "KEK{code}",
+                url: "S{code}",
                 defaults: new { controller = "Home", action = "HandleShort", code = UrlParameter.Optional });
             
             routes.MapRoute(

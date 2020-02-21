@@ -7,14 +7,14 @@
     var url = ViewBag.CurrentUrl;
 }
 <h1 class="text-center">Short Url</h1>
-<section id="urlBox">
+<section id="urlBox" class="container-fluid" style="background-color: blueviolet;">
     @using (Html.BeginForm("GetShortUrl", "Home", FormMethod.Post, new { @class = "text-center" }))
     {
-    @Html.Label("Введите ссылку для сокращения: ", new { @class = "text-center h2" })
+    <div class="text-center h2" style="color: white;">Введите ссылку для сокращения:</div> 
     <br />
     <div id="form-container">
-        @Html.EditorFor(m => m.FullUrl)
-        <input type="submit" class="btn btn-danger" value="Сократить" style="height: 100%;" />
+        <input type="url" name="FullUrl" class="lr-pad input-lg fullUrl-input"/>
+        <input type="submit" class="btn btn-shorten" value="Сократить"/>
         <br />
     </div>
     <a class="center-block text-center" href="@shortUrl">@shortUrl</a>
@@ -33,15 +33,16 @@
             <a href="@url@item.ShortUrl" id="shortUrl @item.Id">@url@item.ShortUrl</a>
         </div>
         <div class="col-md-2 copy lr-pad">
-            <button class="btn copy-btn" onclick="copyById('shortUrl @item.Id')">Скопировать</button>
+            <button class="btn copy-btn" onclick="copyById('shortUrl ' + @item.Id)">Скопировать</button>
         </div>
     </div>
     }
 </div>
 
+<script src="~/Scripts/Main.js"></script>
 
 <style>
-    #FullUrl {
+    /*#FullUrl {
         width: 100%;
         height: 100%;
         max-width: 500px;
@@ -56,5 +57,5 @@
         box-shadow: 0px 1px 4px #ccc;
         padding: 10px 10px 30px 10px;
         margin: 40px auto 40px auto;
-    }
+    }*/
 </style>

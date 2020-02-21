@@ -27,7 +27,7 @@ namespace ShortUrl.Controllers
             {
                 userLinks = new List<Link>();
                 string userShorts = Request.Cookies[cookieName].Value;
-                var parsedData = userShorts.Split(':');
+                var parsedData = userShorts.Split(':').Reverse();
                 foreach (var item in parsedData)
                 {
                     var currentLink = db.Links.Where(l => l.ShortUrl == item).FirstOrDefault();
@@ -41,7 +41,7 @@ namespace ShortUrl.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetShortUrl(Link url)
+        public RedirectResult GetShortUrl(Link url)
         {
             var link = UrlShorter.GetShortedLink(url.FullUrl);
 
@@ -55,7 +55,8 @@ namespace ShortUrl.Controllers
 
             ViewBag.UserLinks = GetShortsFromCookies("UserShorts");
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
-            return View("Index", link);
+            //return View("Index", link);
+            return Redirect("/Home/Index");
         }
 
         public void HandleShort(string code)
