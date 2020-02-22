@@ -4,39 +4,6 @@
 @{
     var url = ViewBag.CurrentUrl;
 }
-<h1>Строка для гита</h1>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ShortUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullUrl)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a href="@item.FullUrl">@item.FullUrl</a>
-                </td>
-                <td>
-                    <a id="shortUrl @item.Id" href="@url@item.ShortUrl">@url@item.ShortUrl</a>
-                </td>
-                <td>
-                    <button onclick="copyById('shortUrl @item.Id')">Скопировать ссылку</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<br />
 
 <div class="container-fluid" style="background-color: blueviolet">
     @foreach (var item in Model)
@@ -55,6 +22,4 @@
     }
 </div>
 
-<br />
-@Html.CreateLinkTable(Model)
 <script src="~/Scripts/Main.js"></script>

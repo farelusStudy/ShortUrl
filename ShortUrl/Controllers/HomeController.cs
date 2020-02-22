@@ -14,7 +14,8 @@ namespace ShortUrl.Controllers
 
         public ActionResult Index(Link link = null)
         {
-            ViewBag.UserLinks = GetShortsFromCookies("UserShorts");
+            ViewBag.UserLinks = GetShortsFromCookies("UserShorts")??new List<Link>();
+            //ViewBag.UserLinks = new List<Link>();
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
 
             return View(link ?? new Link());
@@ -43,6 +44,7 @@ namespace ShortUrl.Controllers
         [HttpPost]
         public RedirectResult GetShortUrl(Link url)
         {
+            if(String.IsNullOrEmpty(url.FullUrl)) return Redirect("/Home/Index");
             var link = UrlShorter.GetShortedLink(url.FullUrl);
 
             string cookies = "";
@@ -55,7 +57,6 @@ namespace ShortUrl.Controllers
 
             ViewBag.UserLinks = GetShortsFromCookies("UserShorts");
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
-            //return View("Index", link);
             return Redirect("/Home/Index");
         }
 
@@ -68,6 +69,7 @@ namespace ShortUrl.Controllers
         {
             var links = db.Links.ToList();
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
+            links.Reverse();
             return View(links);
         }
 
