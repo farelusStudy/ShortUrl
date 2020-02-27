@@ -98,6 +98,7 @@ textarea {
 
 .fullUrl-grid {
     grid-column-start: 1;
+    padding-left:10px;
     width: 100%;
 }
 
