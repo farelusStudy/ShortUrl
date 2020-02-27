@@ -15,7 +15,6 @@ namespace ShortUrl.Controllers
         public ActionResult Index(Link link = null)
         {
             ViewBag.UserLinks = GetShortsFromCookies("UserShorts")??new List<Link>();
-            //ViewBag.UserLinks = new List<Link>();
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
 
             return View(link ?? new Link());
@@ -103,20 +102,6 @@ namespace ShortUrl.Controllers
             Response.Cookies["Links"].Expires = DateTime.Now.AddDays(1);
 
             return GetCookie();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         protected override void Dispose(bool disposing)
