@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShortUrl.Annotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace ShortUrl.Models
         public string ShortUrl { get; set; }
 
         [Required]
+        [DataType(DataType.Url)]
+        //[NotContain(Substring: UrlShorter.MainUrl)]
         public string FullUrl { get; set; }
     }
 }
