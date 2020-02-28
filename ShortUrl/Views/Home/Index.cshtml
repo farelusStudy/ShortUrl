@@ -1,9 +1,9 @@
-﻿@model ShortUrl.Models.Link
-@using ShortUrl.Helpers
+﻿@using ShortUrl.Helpers
 @using ShortUrl.Models
+@model Link
 @{
     ViewBag.Title = "Home Page";
-    var shortUrl = (Model.ShortUrl != null) ? ShortUrl.Models.UrlShorter.MainUrl + Model.ShortUrl : "";
+    var shortUrl = (!String.IsNullOrEmpty(Model.ShortUrl)) ? ShortUrl.Models.UrlShorter.MainUrl + Model.ShortUrl : "";
     var url = ViewBag.CurrentUrl;
 }
 <h1 class="text-center">Short Url</h1>
@@ -13,12 +13,15 @@
         <div class="text-center h2" style="color: white;">Введите ссылку для сокращения:</div>
         <br />
         <div class="form-container-grid">
-            <input type="url" name="FullUrl" class="lr-pad input-lg fullUrl-grid fullUrl-input" 
-                   placeholder="Длинная ссылка"/>
+            <input type="url" name="FullUrl" class="lr-pad input-lg fullUrl-grid fullUrl-input"
+                   placeholder="Длинная ссылка" />
             <input type="submit" class="btn btn-shorten-grid btn-shorten" value="Сократить" />
             <br />
         </div>
-        <a class="center-block text-center" href="@shortUrl">@shortUrl</a>
+        if (!String.IsNullOrEmpty(Model.ShortUrl))
+        {
+            <a class="center-block text-center" href="@shortUrl">@shortUrl</a>
+        }
     }
 </section>
 
@@ -44,3 +47,5 @@
 }
 
 <script src="~/Scripts/Main.js"></script>
+
+

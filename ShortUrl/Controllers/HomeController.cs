@@ -41,9 +41,9 @@ namespace ShortUrl.Controllers
         }
 
         [HttpPost]
-        public RedirectResult GetShortUrl(Link url)
+        public RedirectToRouteResult GetShortUrl(Link url)
         {
-            if(String.IsNullOrEmpty(url.FullUrl)) return Redirect("/Home/Index");
+            if(String.IsNullOrEmpty(url.FullUrl)) return RedirectToAction("/Home/Index");
             var link = UrlShorter.GetShortedLink(url.FullUrl);
 
             string cookies = "";
@@ -56,14 +56,13 @@ namespace ShortUrl.Controllers
 
             ViewBag.UserLinks = GetShortsFromCookies("UserShorts");
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
-            return Redirect("/Home/Index");
+            return RedirectToAction("Index", "Home", new { Id = link.Id, FullUrl = link.FullUrl, ShortUrl = link.ShortUrl });
         }
 
         public void HandleShort(string code)
         {
             Response.Redirect(UrlShorter.GetFullUrl(code));
         }
-
         public ActionResult AllLinks()
         {
             var links = db.Links.ToList();
