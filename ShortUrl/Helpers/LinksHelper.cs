@@ -46,7 +46,7 @@ namespace ShortUrl.Helpers
                                     "  document.execCommand('copy');" +
                                     "  document.body.removeChild(tmp);";
                 copyBtn.MergeAttribute("onclick", $"alert(shortLink{link.Id})");
-                //copyBtn.MergeAttribute("onclick", $"copyById(shortLink{link.Id})");
+                //copyBtn.MergeAttribute("onclick", $"copyHrefById(shortLink{link.Id})");
                 copyBtn.SetInnerText("Копировать");
                 btnCopyCol.InnerHtml = copyBtn.ToString();
 

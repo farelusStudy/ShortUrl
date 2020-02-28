@@ -15,12 +15,12 @@
         <div class="form-container-grid">
             <input type="url" name="FullUrl" class="lr-pad input-lg fullUrl-grid fullUrl-input"
                    placeholder="Длинная ссылка" />
-            <input type="submit" class="btn btn-shorten-grid btn-shorten" value="Сократить" />
+            <input type="submit" onclick="isMainUrl(@UrlShorter.MainUrl)" class="btn btn-shorten-grid btn-shorten" value="Сократить" />
             <br />
         </div>
         if (!String.IsNullOrEmpty(Model.ShortUrl))
         {
-            <a class="center-block text-center" href="@shortUrl">@shortUrl</a>
+            <a onshow="copyHrefById('shortenId')" id="shortenId" class="center-block text-center" href="@shortUrl">@shortUrl</a>
         }
     }
 </section>
@@ -28,22 +28,24 @@
 
 @if (ViewBag.UserLinks.Count != 0)
 {
-    <div class="container-fluid" style="background-color: blueviolet">
-        @foreach (var item in ViewBag.UserLinks as List<Link>)
-        {
-            <div class="row link">
-                <div class="col-md-6 long-link lr-pad">
-                    @item.FullUrl
-                </div>
-                <div class="col-md-4 short-link lr-pad">
-                    <a href="@url@item.ShortUrl" id="shortUrl @item.Id">@url@item.ShortUrl</a>
-                </div>
-                <div class="col-md-2 copy lr-pad">
-                    <button class="btn copy-btn" onclick="copyById('shortUrl ' + @item.Id)">Скопировать</button>
-                </div>
+<div class="container-fluid" style="background-color: blueviolet">
+    @foreach (var item in ViewBag.UserLinks as List<Link>)
+    {
+        var curId = "shortUrl" + item.Id;
+        var fShorturl = url + item.ShortUrl;
+        <div class="row link">
+            <div class="col-md-6 long-link lr-pad">
+                @item.FullUrl
             </div>
-        }
-    </div>
+            <div class="col-md-4 short-link lr-pad">
+                <a href="@fShorturl" class="test" id='@curId'>@fShorturl</a>
+            </div>
+            <div class="col-md-2 copy lr-pad">
+                <button class="btn copy-btn" onclick="copyHrefById('@curId')">Скопировать</button>
+            </div>
+        </div>
+    }
+</div>
 }
 
 <script src="~/Scripts/Main.js"></script>

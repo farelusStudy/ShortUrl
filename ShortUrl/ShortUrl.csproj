@@ -190,6 +190,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\LinksHelper.cs" />
+    <Compile Include="Migrations\202002081619269_InitialCreate.cs" />
+    <Compile Include="Migrations\202002081619269_InitialCreate.designer.cs">
+      <DependentUpon>202002081619269_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002281106200_AddRequiredAnnotation.cs" />
+    <Compile Include="Migrations\202002281106200_AddRequiredAnnotation.designer.cs">
+      <DependentUpon>202002281106200_AddRequiredAnnotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\ProjectContext.cs" />
     <Compile Include="Models\UrlShorter.cs" />
@@ -236,7 +245,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AllLinks.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202002081619269_InitialCreate.resx">
+      <DependentUpon>202002081619269_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281106200_AddRequiredAnnotation.resx">
+      <DependentUpon>202002281106200_AddRequiredAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
