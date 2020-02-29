@@ -26,23 +26,12 @@ namespace ShortUrl.Models
         {
             var code = UniqueCode(fullUrl.Length);
 
-            while (IsExists(code, links)) code = UniqueCode(fullUrl.Length);
+            while (IsExists(code, links)) 
+                code = UniqueCode(fullUrl.Length);
 
             var link = new Link() { FullUrl = fullUrl, ShortUrl = code };
 
             return link;
-        }
-
-        /// <summary>
-        /// Find full link from db by unic short code
-        /// </summary>
-        /// <param name="shortUrl">unic short code of url</param>
-        /// <returns>full url if exsist, else null</returns>
-        public static string GetFullUrl(string shortUrl)
-        {
-            var link = db.Links.Where(l => l.ShortUrl == shortUrl).ToList().FirstOrDefault();
-            if (link == null) return null;
-            return link.FullUrl;
         }
 
         private static bool IsExists(string code, List<Link> links) => links.Where(l => l.ShortUrl == code).FirstOrDefault() != null;

@@ -22,8 +22,3 @@ function isMainUrl(mainUrl) {
     return ans;
 }
 
-function onCalcUrl(url) {
-    let inp = document.getElementsByName('FullUrl');
-    inp.value;
-}
-

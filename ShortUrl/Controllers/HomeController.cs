@@ -44,7 +44,8 @@ namespace ShortUrl.Controllers
         [HttpPost]
         public async Task<RedirectToRouteResult> GetShortUrl(Link url)
         {
-            if(String.IsNullOrEmpty(url.FullUrl)) return RedirectToAction("/Home/Index");
+            if(String.IsNullOrEmpty(url.FullUrl)) 
+                return RedirectToAction("Index", "Home");
             var link = UrlShorter.GetShortedLink(url.FullUrl, db.Links.ToList());
             db.Links.Add(link);
             await db.SaveChangesAsync();
@@ -64,7 +65,8 @@ namespace ShortUrl.Controllers
 
         public void HandleShort(string code)
         {
-            Response.Redirect(UrlShorter.GetFullUrl(code));
+            var link = db.Links.Where(l => l.ShortUrl == code).ToList().FirstOrDefault();
+            Response.Redirect(link.FullUrl);
         }
         public ActionResult AllLinks()
         {
@@ -82,39 +84,7 @@ namespace ShortUrl.Controllers
 
             return View("AllLinks");
         }
-
-        public string GetCookie()
-        {
-            string MyCookieValue = "";
-            // сначала нам требуется проверить на null наличие cookie
-            if (Request.Cookies["Coco"] != null)
-                MyCookieValue = Request.Cookies["Coco"].Value;
-            if (Request.Cookies["Links"] != null)
-            {
-                MyCookieValue = Request.Cookies["Links"].Value;
-            }
-            return MyCookieValue;
-        }
-        public string SetCookie()
-        {
-            // создаем cookie
-            Response.Cookies["Coco"].Value = "Value";
-
-            // задаем срок истечения срока действия cookie
-            Response.Cookies["Coco"].Expires = DateTime.Now.AddDays(1);
-
-            var links = db.Links.ToList();
-            string cookieValue = "";
-            foreach (var item in links)
-            {
-                cookieValue += item.ShortUrl + ":";
-            }
-            Response.Cookies["Links"].Value = cookieValue.Substring(0, cookieValue.Length - 1);
-            Response.Cookies["Links"].Expires = DateTime.Now.AddDays(1);
-
-            return GetCookie();
-        }
-
+     
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
