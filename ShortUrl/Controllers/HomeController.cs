@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -41,10 +42,12 @@ namespace ShortUrl.Controllers
         }
 
         [HttpPost]
-        public RedirectToRouteResult GetShortUrl(Link url)
+        public async Task<RedirectToRouteResult> GetShortUrl(Link url)
         {
             if(String.IsNullOrEmpty(url.FullUrl)) return RedirectToAction("/Home/Index");
-            var link = UrlShorter.GetShortedLink(url.FullUrl);
+            var link = UrlShorter.GetShortedLink(url.FullUrl, db.Links.ToList());
+            db.Links.Add(link);
+            await db.SaveChangesAsync();
 
             string cookies = "";
             if (Request.Cookies["UserShorts"] != null)
@@ -69,6 +72,15 @@ namespace ShortUrl.Controllers
             ViewBag.CurrentUrl = UrlShorter.MainUrl;
             links.Reverse();
             return View(links);
+        }
+
+        public ActionResult DeleteLink(Link link)
+        {
+            if (link == null) return HttpNotFound();
+            db.Links.Remove(link);
+            db.SaveChangesAsync();
+
+            return View("AllLinks");
         }
 
         public string GetCookie()

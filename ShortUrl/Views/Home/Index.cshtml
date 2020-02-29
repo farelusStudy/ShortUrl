@@ -3,7 +3,6 @@
 @model Link
 @{
     ViewBag.Title = "Home Page";
-    var shortUrl = (!String.IsNullOrEmpty(Model.ShortUrl)) ? ShortUrl.Models.UrlShorter.MainUrl + Model.ShortUrl : "";
     var url = ViewBag.CurrentUrl;
 }
 <h1 class="text-center">Short Url</h1>
@@ -15,12 +14,11 @@
         <div class="form-container-grid">
             <input type="url" name="FullUrl" class="lr-pad input-lg fullUrl-grid fullUrl-input"
                    placeholder="Длинная ссылка" />
-            <input type="submit" onclick="isMainUrl(@UrlShorter.MainUrl)" class="btn btn-shorten-grid btn-shorten" value="Сократить" />
-            <br />
+            <input type="submit" class="btn btn-shorten-grid btn-shorten" value="Сократить" />
         </div>
         if (!String.IsNullOrEmpty(Model.ShortUrl))
         {
-            <a onshow="copyHrefById('shortenId')" id="shortenId" class="center-block text-center" href="@shortUrl">@shortUrl</a>
+            <a onshow="copyHrefById('shortenId')" id="shortenId" class="center-block text-center" href="@Model.FShortUrl">@Model.FShortUrl</a>
         }
     }
 </section>
@@ -32,13 +30,12 @@
     @foreach (var item in ViewBag.UserLinks as List<Link>)
     {
         var curId = "shortUrl" + item.Id;
-        var fShorturl = url + item.ShortUrl;
         <div class="row link">
             <div class="col-md-6 long-link lr-pad">
                 @item.FullUrl
             </div>
             <div class="col-md-4 short-link lr-pad">
-                <a href="@fShorturl" class="test" id='@curId'>@fShorturl</a>
+                <a href="@item.FShortUrl" class="test" id='@curId'>@item.FShortUrl</a>
             </div>
             <div class="col-md-2 copy lr-pad">
                 <button class="btn copy-btn" onclick="copyHrefById('@curId')">Скопировать</button>

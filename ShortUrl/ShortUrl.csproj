@@ -199,6 +199,10 @@
     <Compile Include="Migrations\202002281106200_AddRequiredAnnotation.designer.cs">
       <DependentUpon>202002281106200_AddRequiredAnnotation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002281212197_Remove required at short url.cs" />
+    <Compile Include="Migrations\202002281212197_Remove required at short url.designer.cs">
+      <DependentUpon>202002281212197_Remove required at short url.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\ProjectContext.cs" />
@@ -252,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002281106200_AddRequiredAnnotation.resx">
       <DependentUpon>202002281106200_AddRequiredAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281212197_Remove required at short url.resx">
+      <DependentUpon>202002281212197_Remove required at short url.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

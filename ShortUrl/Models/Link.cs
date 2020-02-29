@@ -9,16 +9,19 @@ namespace ShortUrl.Models
 {
     public class Link
     {
-        public static string MainUrl;
+        public static string MainUrl = UrlShorter.MainUrl;
 
         public int Id { get; set; }
 
-        [Required]
         public string ShortUrl { get; set; }
 
         [Required]
         [DataType(DataType.Url)]
-        //[NotContain(Substring: UrlShorter.MainUrl)]
         public string FullUrl { get; set; }
+
+        public string FShortUrl
+        {
+            get => MainUrl + ShortUrl;
+        }
     }
 }

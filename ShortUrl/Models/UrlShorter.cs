@@ -16,22 +16,19 @@ namespace ShortUrl.Models
         /// <summary>
         /// Service current url before short code
         /// </summary>
-        public static string MainUrl { get; set; } = @"https://localhost:44397/S";
+        public const string MainUrl = @"https://localhost:44397/S";
 
         /// <summary>
         /// Find unic short code of full url from db
         /// or make it, if it does not exist
         /// </summary>
-        public static Link GetShortedLink(string fullUrl)
+        public static Link GetShortedLink(string fullUrl, List<Link> links)
         {
             var code = UniqueCode(fullUrl.Length);
 
-            while (IsExists(code)) code = UniqueCode(fullUrl.Length);
+            while (IsExists(code, links)) code = UniqueCode(fullUrl.Length);
 
             var link = new Link() { FullUrl = fullUrl, ShortUrl = code };
-
-            db.Links.Add(link);
-            db.SaveChangesAsync();
 
             return link;
         }
@@ -48,7 +45,7 @@ namespace ShortUrl.Models
             return link.FullUrl;
         }
 
-        private static bool IsExists(string code) => db.Links.Where(l => l.ShortUrl == code).FirstOrDefault() != null;
+        private static bool IsExists(string code, List<Link> links) => links.Where(l => l.ShortUrl == code).FirstOrDefault() != null;
 
         private static string UniqueCode(int value)
         {
